@@ -20,13 +20,18 @@ class App extends Component {
             ]
         }
     }
+
     deleteItem = (id) =>{
        this.setState(({data})=>{
            return {data: data.filter(item=>item.id!==id)}
        });
     };
-    createItem = () =>{
 
+    createItem = (item) =>{
+        this.setState(({data})=>{
+            const id = Math.max(...data.map((item=>(item.id)))) + 1;
+            return {data: [...data, {id, ...item}]}
+        });
     };
 
     render() {
@@ -40,7 +45,8 @@ class App extends Component {
                 <EmployersList
                     data={this.state.data}
                     onDelete={this.deleteItem}/>
-                <EmployersAddForm/>
+                <EmployersAddForm
+                    onCreate={this.createItem}/>
             </div>
         );
     }

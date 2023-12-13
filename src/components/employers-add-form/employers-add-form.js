@@ -16,14 +16,20 @@ class EmployersAddForm extends Component {
         })
     };
 
+    onSubmit = (e) => {
+        e.preventDefault();
+    };
+
     render() {
         const {name, salary} = this.state;
+        const {onCreate} = this.props;
 
         return (
             <div className="app-add-form">
                 <h3>Додати нового співробітника</h3>
                 <form
-                    className="add-form d-flex">
+                    className="add-form d-flex"
+                    onSubmit={this.onSubmit}>
                     <input type="text"
                            className="form-control new-post-label"
                            placeholder="Как его зовут?"
@@ -36,7 +42,9 @@ class EmployersAddForm extends Component {
                            name="salary"
                            value={salary}
                            onChange={this.onValueChange}/>
-                    <button type="submit" className="btn btn-outline-light">
+                    <button type="submit"
+                            className="btn btn-outline-light"
+                            onClick={() => onCreate({name, salary})}>
                         Додати
                     </button>
                 </form>
