@@ -36,7 +36,7 @@ class EmployersAddForm extends Component {
                     onSubmit={this.onSubmit}>
                     <input type="text"
                            className="form-control new-post-label"
-                           placeholder="Как его зовут?"
+                           placeholder="Ім'я?"
                            name="name"
                            value={name}
                            onChange={this.onValueChange}/>
@@ -48,7 +48,7 @@ class EmployersAddForm extends Component {
                            onChange={this.onValueChange}/>
                     <button type="submit"
                             className="btn btn-outline-light"
-                            onClick={() => onCreate({name, salary})}>
+                            onClick={() => +salary > 0 && name.length >= 3 && onCreate({name, salary})}>
                         Додати
                     </button>
                 </form>
