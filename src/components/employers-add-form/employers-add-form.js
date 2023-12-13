@@ -18,6 +18,10 @@ class EmployersAddForm extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
+        this.setState({
+            name: '',
+            salary: ''
+        });
     };
 
     render() {

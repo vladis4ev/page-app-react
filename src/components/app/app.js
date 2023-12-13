@@ -14,9 +14,9 @@ class App extends Component {
         super(props);
         this.state = {
             data: [
-                {id: 1, name: "Gonzales", salary: "1000", increase: false, rise: false},
-                {id: 2, name: "Pedro", salary: "2000", increase: false, rise: false},
-                {id: 3, name: "Rodrigo", salary: "1500", increase: false, rise: false}
+                {id: 1, name: "Gonzales", salary: "1000", increase: false, raise: false},
+                {id: 2, name: "Pedro", salary: "2000", increase: false, raise: false},
+                {id: 3, name: "Rodrigo", salary: "1500", increase: false, raise: false}
             ]
         }
     }
@@ -46,9 +46,15 @@ class App extends Component {
     };
 
     render() {
+        const raised = this.state.data
+            .filter((item)=>item.raise)
+            .length;
+
         return (
             <div className='app'>
-                <AppInfo/>
+                <AppInfo
+                    employees={this.state.data.length}
+                    raised={raised}/>
                 <div className="search-panel">
                     <SearchPanel/>
                     <AppFilter/>
