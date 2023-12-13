@@ -14,9 +14,9 @@ class App extends Component {
         super(props);
         this.state = {
             data: [
-                {id: 1, name: "Gonzales", salary: "1000"},
-                {id: 2, name: "Pedro", salary: "2000"},
-                {id: 3, name: "Rodrigo", salary: "1500"}
+                {id: 1, name: "Gonzales", salary: "1000", increase: false, rise: false},
+                {id: 2, name: "Pedro", salary: "2000", increase: false, rise: false},
+                {id: 3, name: "Rodrigo", salary: "1500", increase: false, rise: false}
             ]
         }
     }
@@ -34,6 +34,17 @@ class App extends Component {
         });
     };
 
+    toggleProp = (id, prop) =>{
+        this.setState(({data})=>({
+            data: data.map((item)=>{
+                if(item.id===id){
+                    return {...item, [prop]: !item[prop]}
+                }
+                return item;
+            })
+        }));
+    };
+
     render() {
         return (
             <div className='app'>
@@ -44,7 +55,8 @@ class App extends Component {
                 </div>
                 <EmployersList
                     data={this.state.data}
-                    onDelete={this.deleteItem}/>
+                    onDelete={this.deleteItem}
+                    onToggleProp={this.toggleProp}/>
                 <EmployersAddForm
                     onCreate={this.createItem}/>
             </div>
