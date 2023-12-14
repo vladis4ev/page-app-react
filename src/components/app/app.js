@@ -18,7 +18,10 @@ class App extends Component {
                 {id: 2, name: "Pedro", salary: "2000", increase: false, raise: false},
                 {id: 3, name: "Rodrigo", salary: "1500", increase: false, raise: false}
             ],
-            term: ''
+            term: '',
+            filter: '', // todo: refactor on only one field for filters, record filter's name, remove increase and salary from data
+            increase: false,
+            salary: false
         }
     }
 
@@ -50,19 +53,37 @@ class App extends Component {
         this.setState({term})
     };
 
-    searchEmp = (data, term) => {
+    onUpdateFilter = (e) => {
+        const attribute = e.currentTarget.getAttribute("data-toggle");
+        let filter = {increase: false, salary: false};
+        attribute && (filter[attribute] = true);
+        this.setState(filter);
+    };
+
+    searchEmp = (data, term, increase, salary) => {
+        if (increase) {
+            return data.filter((item) => {
+                return item.increase
+            })
+        }
+        if (salary) {
+            return data.filter((item) => {
+                return +item.salary >= 1000
+            })
+        }
         if (term.length === 0) {
             return data;
         }
+        // todo: take account using filters and search
         return data.filter((item) => {
             return item.name.indexOf(term) > -1
         })
     };
 
     render() {
-        const {data, term} = this.state;
+        const {data, term, increase, salary} = this.state;
         const raised = data.filter((item) => item.raise).length;
-        const visibleData = this.searchEmp(data, term);
+        const visibleData = this.searchEmp(data, term, increase, salary);
 
         return (
             <div className='app'>
@@ -71,7 +92,9 @@ class App extends Component {
                     raised={raised}/>
                 <div className="search-panel">
                     <SearchPanel onUpdateSearch={this.onUpdateSearch}/>
-                    <AppFilter/>
+                    <AppFilter
+                        onUpdateFilter={this.onUpdateFilter}
+                        filters={{increase, salary}}/>
                 </div>
                 <EmployersList
                     data={visibleData}

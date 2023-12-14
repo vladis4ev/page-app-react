@@ -1,21 +1,30 @@
 import './app-filter.css'
 
-const AppFilter = () => {
+const AppFilter = (props) => {
+    const {onUpdateFilter, filters: {increase, salary}} = props;
+    const btnClass = "btn btn-";
+    const lightClass = "light";
+    const outlineClass = "outline-light";
     return (
         <div className='btn-group'>
             <button
-                className="btn btn-light"
-                type="button">
+                className={btnClass + (!increase && !salary ? lightClass : outlineClass)}
+                type="button"
+                onClick={onUpdateFilter}>
                 Усі співробітники
             </button>
             <button
-                className="btn btn-outline-light"
-                type="button">
+                className={btnClass + (increase ? lightClass : outlineClass)}
+                type="button"
+                data-toggle="increase"
+                onClick={onUpdateFilter}>
                 На підвищення
             </button>
             <button
-                className="btn btn-outline-light"
-                type="button">
+                className={btnClass + (salary ? lightClass : outlineClass)}
+                type="button"
+                data-toggle="salary"
+                onClick={onUpdateFilter}>
                 З/П більше 1к$
             </button>
         </div>
