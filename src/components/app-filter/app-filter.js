@@ -1,32 +1,31 @@
 import './app-filter.css'
 
-const AppFilter = (props) => {
-    const {onUpdateFilter, filters: {increase, salary}} = props;
-    const btnClass = "btn btn-";
-    const lightClass = "light";
-    const outlineClass = "outline-light";
+const AppFilter = ({onSelectFilter, filter}) => {
+
+    const buttonsData = [
+        {name: 'all', label: 'Усі співробітники'},
+        {name: 'raise', label: 'На підвищення'},
+        {name: 'bonus', label: 'Премію отримують'},
+        {name: 'salary', label: 'З/П більше 1к$'}
+    ];
+
+    const buttons = buttonsData.map(({name, label}) => {
+        const active = name === filter;
+        const clazz = active ? "btn-light" : "btn-outline-light";
+        return (
+            <button
+                className={`btn ${clazz}`}
+                type="button"
+                key={name}
+                onClick={()=>onSelectFilter(name)}>
+                {label}
+            </button>
+        )
+    });
+
     return (
         <div className='btn-group'>
-            <button
-                className={btnClass + (!increase && !salary ? lightClass : outlineClass)}
-                type="button"
-                onClick={onUpdateFilter}>
-                Усі співробітники
-            </button>
-            <button
-                className={btnClass + (increase ? lightClass : outlineClass)}
-                type="button"
-                data-toggle="increase"
-                onClick={onUpdateFilter}>
-                На підвищення
-            </button>
-            <button
-                className={btnClass + (salary ? lightClass : outlineClass)}
-                type="button"
-                data-toggle="salary"
-                onClick={onUpdateFilter}>
-                З/П більше 1к$
-            </button>
+            {buttons}
         </div>
     );
 };
