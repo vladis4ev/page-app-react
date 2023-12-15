@@ -40,7 +40,8 @@ class App extends Component {
         this.setState(({data}) => ({
             data: data.map((item) => {
                 if (item.id === id) {
-                    return {...item, [prop]: !item[prop]}
+                    prop = typeof +prop === 'number'?{[prop]: !item[prop]} : ({salary: prop});
+                    return {...item, ...prop}
                 }
                 return item;
             })
@@ -99,7 +100,8 @@ class App extends Component {
                 <EmployersList
                     data={visibleData}
                     onDelete={this.deleteItem}
-                    onToggleProp={this.toggleProp}/>
+                    onToggleProp={this.toggleProp}
+                    onUpdateSalary={this.toggleProp}/>
                 <EmployersAddForm
                     onCreate={this.createItem}/>
             </div>
